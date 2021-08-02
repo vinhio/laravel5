@@ -70,3 +70,11 @@ services:
     container_name: laravel5-redis
     labels:
       SERVICE_NAME: laravel5-redis
+
+  static:
+    build:
+      context: ""
+      dockerfile: Dockerfile.nodejs
+    image: laravel5-static
+    hostname: laravel5-static
+    container_name: laravel5-static

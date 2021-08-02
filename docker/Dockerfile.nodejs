@@ -1,0 +1,18 @@
+FROM alpine:3.10
+
+WORKDIR /build
+
+# 1. Install libraries
+RUN apk --update upgrade; \
+    apk add libpng-dev automake \
+    libtool imagemagick-dev make g++ autoconf\
+    fontconfig ghostscript-fonts libfontenc mkfontscale mkfontdir ttf-freefont libxfont \
+    imagemagick bash jq git tar \
+    openssl openssl-dev zlib build-base  \
+    libgcc glib libstdc++ libxext libxrender ttf-dejavu
+
+# 2. Install Node & Yarn
+RUN apk add --update nodejs npm
+RUN apk add --no-cache yarn --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
+
+# 3. Finalize container

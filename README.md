@@ -56,7 +56,7 @@ Go into Web instance
 
 Check (Make sure log in to Web instance)
 
-    laravel5-web ~/app $ php -v
+    laravel5-web ~/app $ php -v | grep PHP
     laravel5-web ~/app $ composer -v | grep 'Composer version'
 
 ### 3.Install Laravel 5.4
@@ -88,11 +88,6 @@ Check via HTTP
     DB_DATABASE=laravel5
     DB_USERNAME=user
     DB_PASSWORD=secret
-    ...
-    BROADCAST_DRIVER=redis
-    CACHE_DRIVER=redis
-    SESSION_DRIVER=redis
-    QUEUE_DRIVER=redis
     ...
     REDIS_HOST=redis
     REDIS_PASSWORD=null
