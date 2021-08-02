@@ -67,12 +67,52 @@ Don't for get Go into Web instance (Note: Remember it for each time to add/remov
 
     #make shell
 
-#### a. Install Laravel stuff:
+#### a. Install Laravel:
 
 You should follow step at https://laravel.com/docs/5.4
 
-    #composer create-project --prefer-dist laravel/laravel tmp_app "5.4.*"
-    #mv tmp_app/public/* ./public/ && rm -fr tmp_app/public && mv tmp_app/* . && mv tmp_app/.env . && mv tmp_app/.env.example . && mv tmp_app/.gitattributes . && rm -fr tmp_app
+    laravel5-web ~/app $ composer create-project --prefer-dist laravel/laravel tmp_app "5.4.*"
+    laravel5-web ~/app $ mv tmp_app/public/* ./public/ && rm -fr tmp_app/public && mv tmp_app/* . && mv tmp_app/.env . && mv tmp_app/.env.example . && mv tmp_app/.gitattributes . && rm -fr tmp_app
 
 Check via HTTP
 - http://localhost:8080/
+
+#### b. Update .env file:
+
+    laravel5-web ~/app $ vi .env
+    ...
+    DB_CONNECTION=mysql
+    DB_HOST=db
+    DB_PORT=3306
+    DB_DATABASE=laravel5
+    DB_USERNAME=user
+    DB_PASSWORD=secret
+    ...
+    BROADCAST_DRIVER=redis
+    CACHE_DRIVER=redis
+    SESSION_DRIVER=redis
+    QUEUE_DRIVER=redis
+    ...
+    REDIS_HOST=redis
+    REDIS_PASSWORD=null
+    REDIS_PORT=6379
+    ...
+    MAIL_DRIVER=smtp
+    MAIL_HOST=mail
+    MAIL_PORT=1025
+    MAIL_USERNAME=null
+    MAIL_PASSWORD=null
+    MAIL_ENCRYPTION=null
+    ...
+    
+
+Update Laravel cache config
+
+    laravel5-web ~/app $ php artisan config:cache
+
+#### c. Run migration:
+
+    laravel5-web ~/app $ php artisan migrate
+
+Note: Check database to see new tables `migrations`, `users`, `password_resets`.
+
