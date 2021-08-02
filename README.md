@@ -36,7 +36,8 @@ Note: We can update all docker files and rebuild in development phrase.
 
 #### b. Check status:
 Check via HTTP
-- http://localhost:8080/phpinfo.php
+- Web Server http://localhost:8080/phpinfo.php
+- Mail Server http://localhost:8025/
 
 Check via Command line:
 

@@ -2,6 +2,6 @@
 
 s6-setuidgid nginx /etc/cont-init.d/.create-config.sh
 s6-setuidgid nginx /etc/cont-init.d/.install-dependencies.sh
-#s6-setuidgid nginx /etc/cont-init.d/.init-app.sh
-#s6-setuidgid nginx /etc/cont-init.d/.migrate-db.sh
-#s6-setuidgid nginx /etc/cont-init.d/.install-static.sh
+s6-setuidgid nginx /etc/cont-init.d/.init-app.sh
+s6-setuidgid nginx /etc/cont-init.d/.db-migration.sh
+s6-setuidgid nginx /etc/cont-init.d/.install-static.sh
