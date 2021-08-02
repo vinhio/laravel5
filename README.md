@@ -72,8 +72,7 @@ Don't for get Go into Web instance (Note: Remember it for each time to add/remov
 You should follow step at https://laravel.com/docs/5.4
 
     #composer create-project --prefer-dist laravel/laravel tmp_app "5.4.*"
-    #mv tmp_app/* .
-    #mv tmp_app/.env .
+    #mv tmp_app/* . && mv tmp_app/.env . && mv tmp_app/.env.example . && mv tmp_app/.gitattributes .
     #rm -fr tmp_app
 
 Check via HTTP
