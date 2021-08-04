@@ -4,7 +4,7 @@ all: build run
 
 build:
 	docker-compose -f docker/docker-compose.yml build --no-cache --build-arg hostUID=1000 --build-arg hostGID=1000 web
-	docker-compose -f docker/docker-compose.yml build --no-cache static
+	#docker-compose -f docker/docker-compose.yml build --no-cache static
 
 start: run
 
@@ -30,7 +30,7 @@ ip:
 	docker inspect laravel5-web | grep \"IPAddress\"
 
 install_static:
-	docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error install
+	#docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error install
 
 static:
-	docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error run dev
+	#docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error run dev

@@ -1,10 +1,13 @@
 #!/usr/bin/with-contenv bash
 
+# Enable mode execute for some crontab, laravel-queue
+chmod -R +x /etc/services.d
+
 echo "Make sure, that log file exists"
-#touch storage/logs/laravel.log
+touch storage/logs/laravel.log
 
 echo "Application folder belongs to nginx:nginx"
-# both developer and application mist be able to modify it
+# Both developer and application must be able to modify it
 #chown -Rc nginx:nginx .
 ls | grep -v node_modules | grep -v vendor | xargs -n1 chown -R nginx:nginx
 find . -type d -exec chmod 775 {} \;
@@ -21,7 +24,7 @@ echo "Revoke executable bit from non-executable files"
 #find {app,bootstrap,config,database,public,resources,storage,routes,tests} -type f -exec chmod 664 {} \;
 
 echo "Set executable bit for executable files"
-#chmod 775 artisan
+chmod 775 artisan
 find -type f -name "*.sh" -exec chmod 775 {} \;
 
 echo "Nginx should be able to write uploaded files to temporary directory"
