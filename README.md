@@ -73,7 +73,7 @@ Don't for get Go into Web instance (Note: Remember it for each time to add/remov
 You should follow step at https://laravel.com/docs/5.4
 
     laravel5-web ~/app $ composer create-project --prefer-dist laravel/laravel tmp_app "5.4.*"
-    laravel5-web ~/app $ mv tmp_app/public/* ./public/ && rm -fr tmp_app/public && mv tmp_app/* . && mv tmp_app/.env.example . && mv tmp_app/.gitattributes . && rm -fr tmp_app
+    laravel5-web ~/app $ mv tmp_app/public/* ./public/ && rm -fr tmp_app/public && rm -fr tmp_app/README.md && mv tmp_app/* . && mv tmp_app/.env.example . && mv tmp_app/.gitattributes . && rm -fr tmp_app
 
 Check via HTTP
 - http://localhost:8080/
@@ -111,4 +111,14 @@ Update Laravel cache config
     laravel5-web ~/app $ php artisan migrate
 
 Note: Check database to see new tables `migrations`, `users`, `password_resets`.
+
+### 4. Restart docker
+
+    #make stop && make start && docker ps
+
+Check via HTTP
+
+- Web Server http://localhost:8080/phpinfo.php
+- Mail Server http://localhost:8025/
+
 
