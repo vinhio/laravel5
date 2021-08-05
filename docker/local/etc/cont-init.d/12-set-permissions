@@ -1,11 +1,15 @@
 #!/usr/bin/with-contenv bash
 
+# From vinhxike/php5:latest
+chmod -R +x /etc/cont-init.d
+chmod -R +x /etc/services.d
+chmod -Rc nginx:nginx .
+
 echo "Make sure, that log file exists"
 touch storage/logs/laravel.log
 
 echo "Application folder belongs to nginx:nginx"
 # Both developer and application must be able to modify it
-#chown -Rc nginx:nginx .
 ls | grep -v node_modules | grep -v vendor | xargs -n1 chown -R nginx:nginx
 find . -type d -exec chmod 775 {} \;
 find . -type f -exec chmod ug+rw {} \;
@@ -17,8 +21,8 @@ if [[ -d .data ]]; then
 fi
 
 echo "Revoke executable bit from non-executable files"
-# which must be writable by developer and app in container
-#find {app,bootstrap,config,database,public,resources,storage,routes,tests} -type f -exec chmod 664 {} \;
+# Which must be writable by developer and app in container
+find {app,bootstrap,config,database,public,resources,storage,routes,tests} -type f -exec chmod 664 {} \;
 
 echo "Set executable bit for executable files"
 chmod 775 artisan
