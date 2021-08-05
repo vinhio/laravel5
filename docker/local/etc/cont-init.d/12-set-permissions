@@ -1,8 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-# Enable mode execute for some crontab, laravel-queue
-chmod -R +x /etc/services.d
-
 echo "Make sure, that log file exists"
 touch storage/logs/laravel.log
 
