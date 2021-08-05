@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendEmailCommand;
 use App\Console\Commands\WordOfTheDay;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         WordOfTheDay::class,
+        SendEmailCommand::class,
     ];
 
     /**
@@ -25,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('tips:word-of-the-day')->hourly();
+        $schedule->command('test:word-of-the-day')->hourly();
     }
 
     /**

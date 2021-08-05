@@ -12,7 +12,7 @@ class WordOfTheDay extends Command
      *
      * @var string
      */
-    protected $signature = 'tips:word-of-the-day';
+    protected $signature = 'test:word-of-the-day';
 
     /**
      * The console command description.
