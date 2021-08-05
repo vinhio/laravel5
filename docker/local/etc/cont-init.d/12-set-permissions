@@ -1,10 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-# From vinhxike/php5:latest
-chmod -R +x /etc/cont-init.d
-chmod -R +x /etc/services.d
-chmod -Rc nginx:nginx .
-
 echo "Make sure, that log file exists"
 touch storage/logs/laravel.log
 
