@@ -6,8 +6,6 @@ touch storage/logs/laravel.log
 echo "Application folder belongs to nginx:nginx"
 # Both developer and application must be able to modify it
 ls | grep -v node_modules | grep -v vendor | xargs -n1 chown -R nginx:nginx
-find . -type d -exec chmod 775 {} \;
-find . -type f -exec chmod ug+rw {} \;
 
 # If DB is shared as volume, it must be owned by root in DB container
 if [[ -d .data ]]; then
@@ -17,7 +15,9 @@ fi
 
 echo "Revoke executable bit from non-executable files"
 # Which must be writable by developer and app in container
-find {app,bootstrap,config,database,public,resources,storage,routes,tests} -type f -exec chmod 664 {} \;
+find . -type d ! -path "./.idea/*" ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./vendor/*" -exec chmod 775 {} \;
+find . -type f ! -path "./.idea/*" ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./vendor/*" -exec chmod ug+rw {} \;
+#find {app,bootstrap,config,database,public,resources,storage,routes,tests} -type f -exec chmod 664 {} \;
 
 echo "Set executable bit for executable files"
 chmod 775 artisan
