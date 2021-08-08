@@ -11,6 +11,8 @@ Docker compose `docker/docker-compose.yml` declared 4 instances:
     - Caching instance Redis 4.3.0
     - MailServer instance Mailhog 1.0.1
 
+Note: Mail to me `vohuynhvinh@gmail.com` if you get any issue.
+
 ## I. Install with existing Laravel code
 
 ### 1. Add docker files to Laravel code
@@ -75,10 +77,28 @@ Take a look log container `laravel5-web`
 
     #make logs
 
-### 4. Check
+### 4. Checking
 
 - Web Server http://localhost:8080/
 - Mail Server http://localhost:8025/
+
+#### b. Check Schedule
+Try to keep your app run over 1 or 2 hours. You will receive email send from schedule hourly.
+So, just check on mail server local at http://localhost:8025/
+
+#### a. Check Queue
+You run command `test:send-mail` and check on mail server local at http://localhost:8025/
+
+    #make shell
+    laravel5-web ~/app $ php artisan test:send-mail
+
+#### c. Check XDebug with PHPStorm
+
+Everything reading for XDebug for docker. So, your step just setup on PHPStorm.
+
+Please review file `docker/customize/etc/php5/conf.d/xdebug.ini` to know server and port. 
+
+Note: Don't touch on `xdebug.ini` unless you want to get bug :).
 
 ## II. Install new Laravel project
 
@@ -157,5 +177,3 @@ Check via HTTP
 
 - Web Server http://localhost:8080/
 - Mail Server http://localhost:8025/
-
-
