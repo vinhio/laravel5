@@ -11,6 +11,8 @@ Docker compose `docker/docker-compose.yml` declared 4 instances:
     - Caching instance Redis 4.3.0
     - MailServer instance Mailhog 1.0.1
 
+Note: Mail to me `vohuynhvinh@gmail.com` if you get any issue.
+
 ## I. Install with existing Laravel code
 
 ### 1. Add docker files to Laravel code
@@ -75,7 +77,7 @@ Take a look log container `laravel5-web`
 
     #make logs
 
-### 4. Check
+### 4. Checking
 
 - Web Server http://localhost:8080/
 - Mail Server http://localhost:8025/
