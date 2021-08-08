@@ -11,20 +11,111 @@ Docker compose `docker/docker-compose.yml` declared 4 instances:
     - Caching instance Redis 4.3.0
     - MailServer instance Mailhog 1.0.1
 
-## I. Install
+Note: Mail to me `vohuynhvinh@gmail.com` if you get any issue.
 
-### 1. Customize docker image
-Each project we have some different settings, package,.... So, we must modify original image `vinhxike/php5` and call `laravel-web`.
+## I. Install with existing Laravel code
 
-Image `laravel-web` will add some development tools `make mc tmux util-linux` and update some deployment setting in folder `docker/local`. Build `laravel-web`:
+### 1. Add docker files to Laravel code
+
+Copy `docker` folder and `Makefile` to LARAVEL_FOLDER
+
+    docker
+        |_/customize
+        |_/local
+        |_docker-compose.yml
+        |_Dockerfile.local
+        |_/Dockerfile.nodejs
+    Makefile
+
+So, folder structure
+
+    /LARAVEL_FOLDER
+        |_/app 
+        |_/bootstrap
+        |_/config
+        |_/database
+        |_/docker (*)
+            |_/customize
+            |_/local
+            |_docker-compose.yml
+            |_Dockerfile.local
+            |_/Dockerfile.nodejs
+        |_Makefile (*)
+        |_.....
+        |_.env
+        |_artisan
+        |_...
+
+
+### 2. Build docker images
+
+Build docker images 
 
     #make build
+
+Check make sure `laravel5-web` docker image was created
+
+    #docker images | grep laravel5-web
+
+### 3. Run application
+
+Run make command `start` to start docker containers
+
+    #make start
+
+Check docker containers
+
+    #docker ps
+    ...
+    CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS                   PORTS                                                                            NAMES
+    14146afab62f   laravel5-web              "/init"                  6 minutes ago   Up 6 minutes             0.0.0.0:8080->80/tcp, :::8080->80/tcp, 0.0.0.0:8443->443/tcp, :::8443->443/tcp   laravel5-web
+    57d53fe2eff1   mysql:5.7.35              "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes (healthy)   33060/tcp, 0.0.0.0:33060->3306/tcp, :::33060->3306/tcp                           laravel5-db
+    398098dd8dfa   redis:4.0.14-alpine3.11   "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes             6379/tcp                                                                         laravel5-redis
+    e80c313a79da   mailhog/mailhog:v1.0.1    "MailHog"                6 minutes ago   Up 6 minutes             1025/tcp, 0.0.0.0:8025->8025/tcp, :::8025->8025/tcp                              laravel5-mail
+
+Take a look log container `laravel5-web`
+
+    #make logs
+
+### 4. Checking
+
+- Web Server http://localhost:8080/
+- Mail Server http://localhost:8025/
+
+#### b. Check Schedule
+Try to keep your app run over 1 or 2 hours. You will receive email send from schedule hourly.
+So, just check on mail server local at http://localhost:8025/
+
+#### a. Check Queue
+You run command `test:send-mail` and check on mail server local at http://localhost:8025/
+
+    #make shell
+    laravel5-web ~/app $ php artisan test:send-mail
+
+#### c. Check XDebug with PHPStorm
+
+Everything reading for XDebug for docker. So, your step just setup on PHPStorm.
+
+Please review file `docker/customize/etc/php5/conf.d/xdebug.ini` to know server and port. 
+
+Note: Don't touch on `xdebug.ini` unless you want to get bug :).
+
+## II. Install new Laravel project
+
+### 1. Build docker images
+
+Build docker images
+
+    #make build
+
+Check make sure `laravel5-web` docker image was created
+
     #docker images | grep laravel5-web
 
 Note: We can update all docker files and rebuild in development phrase.
 
 ### 2. Start app 
-####a. Start docker
+#### a. Start docker
 
     #make start
 
@@ -36,12 +127,14 @@ Note: We can update all docker files and rebuild in development phrase.
 
 #### b. Check status:
 Check via HTTP
+
 - Web Server http://localhost:8080/phpinfo.php
 - Mail Server http://localhost:8025/
 
 Check via Command line:
 
     #docker ps
+    ...
     CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS                   PORTS                                                                            NAMES
     14146afab62f   laravel5-web              "/init"                  6 minutes ago   Up 6 minutes             0.0.0.0:8080->80/tcp, :::8080->80/tcp, 0.0.0.0:8443->443/tcp, :::8443->443/tcp   laravel5-web
     57d53fe2eff1   mysql:5.7.35              "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes (healthy)   33060/tcp, 0.0.0.0:33060->3306/tcp, :::33060->3306/tcp                           laravel5-db
@@ -53,9 +146,6 @@ Check Web server environment:
 Go into Web instance
 
     #make shell
-
-Check (Make sure log in to Web instance)
-
     laravel5-web ~/app $ php -v | grep PHP
     laravel5-web ~/app $ composer -v | grep 'Composer version'
 
@@ -68,57 +158,22 @@ Don't for get Go into Web instance (Note: Remember it for each time to add/remov
 
     #make shell
 
-#### a. Install Laravel:
+#### Install Laravel:
 
 You should follow step at https://laravel.com/docs/5.4
 
     laravel5-web ~/app $ composer create-project --prefer-dist laravel/laravel tmp_app "5.4.*"
     laravel5-web ~/app $ mv tmp_app/public/* ./public/ && rm -fr tmp_app/public && rm -fr tmp_app/README.md && mv tmp_app/* . && mv tmp_app/.env.example . && mv tmp_app/.gitattributes . && rm -fr tmp_app
 
-Check via HTTP
-- http://localhost:8080/
-
-#### b. Update .env file:
-
-    laravel5-web ~/app $ vi .env
-    ...
-    DB_CONNECTION=mysql
-    DB_HOST=db
-    DB_PORT=3306
-    DB_DATABASE=laravel5
-    DB_USERNAME=user
-    DB_PASSWORD=secret
-    ...
-    REDIS_HOST=redis
-    REDIS_PASSWORD=null
-    REDIS_PORT=6379
-    ...
-    MAIL_DRIVER=smtp
-    MAIL_HOST=mail
-    MAIL_PORT=1025
-    MAIL_USERNAME=null
-    MAIL_PASSWORD=null
-    MAIL_ENCRYPTION=null
-    ...
-    
-
-Update Laravel cache config
-
-    laravel5-web ~/app $ php artisan config:cache
-
-#### c. Run migration:
-
-    laravel5-web ~/app $ php artisan migrate
-
-Note: Check database to see new tables `migrations`, `users`, `password_resets`.
-
 ### 4. Restart docker
 
-    #make stop && make start && docker ps
+    #make stop && make start
+
+Take a look log container `laravel5-web` (Because the first time run app will take a while)
+
+    #make logs
 
 Check via HTTP
 
-- Web Server http://localhost:8080/phpinfo.php
+- Web Server http://localhost:8080/
 - Mail Server http://localhost:8025/
-
-
