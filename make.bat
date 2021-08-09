@@ -1,5 +1,5 @@
 IF "%~1" == "" GOTO fail
-IF "%~1" == "all" GOTO all
+IF "%~1" == "build" GOTO build
 IF "%~1" == "run" GOTO run
 IF "%~1" == "start" GOTO start
 IF "%~1" == "stop" GOTO stop
@@ -14,7 +14,7 @@ IF "%~1" == "static_watch" GOTO static_watch
 
 GOTO:EOF
 
-:all
+:build
     docker-compose -f docker/docker-compose.yml build --no-cache --build-arg hostUID=1000 --build-arg hostGID=1000 web
 	docker-compose -f docker/docker-compose.yml build --no-cache static
 	EXIT
