@@ -30,10 +30,10 @@ ip:
 	docker inspect laravel5-web | grep \"IPAddress\"
 
 static_install:
-	docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error install
+	docker run -it -v "${PWD}:/build" static-builder npm --loglevel=error install
 
 static:
-	docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error run dev
+	docker run -it -v "${PWD}:/build" static-builder npm --loglevel=error run dev
 
 static_watch:
-	docker run -it -v "${PWD}:/build" laravel5-static npm --loglevel=error run watch
+	docker run -it -v "${PWD}:/build" static-builder npm --loglevel=error run watch

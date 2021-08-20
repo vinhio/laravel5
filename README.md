@@ -24,7 +24,7 @@ Copy `docker` folder and `Makefile` to LARAVEL_FOLDER
         |_/local
         |_docker-compose.yml
         |_Dockerfile.local
-        |_/Dockerfile.nodejs
+        |_Dockerfile.nodejs
     Makefile
 
 So, folder structure
@@ -39,7 +39,7 @@ So, folder structure
             |_/local
             |_docker-compose.yml
             |_Dockerfile.local
-            |_/Dockerfile.nodejs
+            |_Dockerfile.nodejs
         |_Makefile (*)
         |_.....
         |_.env

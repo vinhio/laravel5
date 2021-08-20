@@ -80,6 +80,6 @@ services:
     build:
       context: ""
       dockerfile: Dockerfile.nodejs
-    image: laravel5-static
-    hostname: laravel5-static
-    container_name: laravel5-static
+    image: static-builder
+    hostname: static-builder
+    container_name: static-builder
